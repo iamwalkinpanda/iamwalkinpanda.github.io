@@ -5,7 +5,10 @@
     delete sessionStorage.redirect;
     // If we have a redirect path stored and it's not the current page, update the URL.
     if (redirect && redirect !== location.href) {
-        history.replaceState(null, null, redirect);
+        // Construct the new URL from the redirect path
+        const url = new URL(redirect);
+        // Replace the current history state with the intended URL
+        history.replaceState(null, null, url.pathname);
     }
 })();
 

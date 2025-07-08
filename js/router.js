@@ -20,7 +20,7 @@ export async function navigate(path) {
     if (!path) {
         displayWelcomeTerminal();
         updateActiveLink(null);
-        history.pushState({ path: null }, '', window.location.pathname.split('index.html')[0]);
+        history.pushState({ path: null }, '', '/');
         return;
     }
     
@@ -35,11 +35,9 @@ export async function navigate(path) {
         renderContent(markdown);
         
         const { year, quarter, file } = entry;
-        const datePart = file.match(/(\d{4})-(\d{2})-(\d{2})/);
-        if (datePart) {
-            const cleanUrl = `/${year}/${quarter}/${datePart[2]}-${datePart[3]}`;
-            history.pushState({ path }, '', cleanUrl);
-        }
+        // This creates the new URL format: /logs/2025/Quarterback-1/2025-07-08
+        const cleanUrl = `/logs/${year}/${quarter}/${file.replace('.md', '')}`;
+        history.pushState({ path }, '', cleanUrl);
         updateActiveLink(path);
 
     } catch (error) {
@@ -55,16 +53,18 @@ export function handleInitialLoad() {
     const urlPath = window.location.pathname.replace(/\/$/, "");
     const parts = urlPath.split('/').filter(p => p);
     
-    if (parts.length === 3) {
-        const [year, quarter, dayMonth] = parts;
-        const [month, day] = dayMonth.split('-');
-        const dateStr = `${year}-${month}-${day}`;
-        const entryPath = Object.keys(logEntries).find(p => p.includes(dateStr) && p.includes(quarter));
-        if (entryPath) {
+    // Check for the new URL format: /logs/year/quarter/filename
+    if (parts.length === 4 && parts[0] === 'logs') {
+        const [_, year, quarter, filename] = parts;
+        const entryPath = `logs/${year}/${quarter}/${filename}.md`;
+        
+        // Check if the constructed path exists in our fetched entries
+        if (logEntries[entryPath]) {
             navigate(entryPath);
             return;
         }
     }
+    // If URL doesn't match, show the welcome screen
     displayWelcomeTerminal();
 }
 
@@ -74,6 +74,7 @@ export function handleInitialLoad() {
 export function setupEventListeners() {
     const navContainer = document.getElementById('file-navigation');
     const calendarContainer = document.getElementById('calendar-container');
+    const homeLink = document.getElementById('home-link');
 
     navContainer.addEventListener('click', e => {
         if (e.target.matches('a')) {
@@ -87,6 +88,11 @@ export function setupEventListeners() {
             e.preventDefault();
             navigate(e.target.dataset.path);
         }
+    });
+
+    homeLink.addEventListener('click', e => {
+        e.preventDefault();
+        navigate(null); // Navigate to home
     });
 
     window.addEventListener('popstate', (e) => {

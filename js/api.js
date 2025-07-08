@@ -25,7 +25,9 @@ export async function fetchLogFilePaths() {
  * @returns {Promise<string>} A promise that resolves to the markdown content.
  */
 export async function fetchFileContent(path) {
-    const response = await fetch(path);
+    // Construct the direct URL to the raw file
+    const rawUrl = `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/${GITHUB_BRANCH}/${path}`;
+    const response = await fetch(rawUrl);
     if (!response.ok) {
         throw new Error(`File not found: ${path}`);
     }
