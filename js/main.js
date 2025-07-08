@@ -1,4 +1,15 @@
 // FILE: js/main.js
+// This script handles the 404 redirect logic for single-page apps on GitHub Pages.
+(function() {
+    const redirect = sessionStorage.redirect;
+    delete sessionStorage.redirect;
+    // If we have a redirect path stored and it's not the current page, update the URL.
+    if (redirect && redirect !== location.href) {
+        history.replaceState(null, null, redirect);
+    }
+})();
+
+
 import { fetchLogFilePaths } from './api.js';
 import { applyTheme, buildNav, generateCalendar, displayError } from './ui.js';
 import { initRouter, handleInitialLoad, setupEventListeners } from './router.js';
