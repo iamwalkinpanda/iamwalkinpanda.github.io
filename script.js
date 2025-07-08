@@ -1,6 +1,9 @@
+// FILE: script.js
 document.addEventListener('DOMContentLoaded', () => {
     const navContainer = document.getElementById('file-navigation');
     const contentContainer = document.getElementById('content');
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
 
     // --- YOUR FILE STRUCTURE GOES HERE ---
     // This is the only part you need to update when you add new files.
@@ -16,17 +19,36 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    // --- Theme Handling ---
+    function applyTheme(theme) {
+        if (theme === 'dark') {
+            body.classList.add('dark-mode');
+        } else {
+            body.classList.remove('dark-mode');
+        }
+    }
+
+    themeToggle.addEventListener('click', () => {
+        const newTheme = body.classList.contains('dark-mode') ? 'light' : 'dark';
+        localStorage.setItem('theme', newTheme);
+        applyTheme(newTheme);
+    });
+
+    // Apply saved theme on initial load
+    const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
+    applyTheme(savedTheme);
+
+
     // --- Function to build the navigation ---
     function buildNav() {
         let navHTML = '';
         for (const year in fileStructure) {
             navHTML += `<h3>${year}</h3>`;
             for (const quarter in fileStructure[year]) {
-                navHTML += `<h4>${quarter.replace('-', ' ')}</h4><ul>`;
+                navHTML += `<h4>${quarter.replace(/-/g, ' ')}</h4><ul>`;
                 fileStructure[year][quarter].forEach(file => {
                     const filePath = `logs/${year}/${quarter}/${file}`;
-                    // Extract date from filename for display
-                    const displayName = file.replace('.md', ''); 
+                    const displayName = file.replace('.md', '');
                     navHTML += `<li><a href="#" data-path="${filePath}">${displayName}</a></li>`;
                 });
                 navHTML += `</ul>`;
@@ -43,7 +65,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 throw new Error(`File not found: ${path}`);
             }
             const markdown = await response.text();
-            // Use the 'marked' library to convert markdown to HTML
             contentContainer.innerHTML = `<div class="log-entry">${marked.parse(markdown)}</div>`;
         } catch (error) {
             console.error('Error loading file:', error);
@@ -57,9 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             const filePath = e.target.dataset.path;
             
-            // Remove active class from all links
             document.querySelectorAll('#file-navigation a').forEach(link => link.classList.remove('active'));
-            // Add active class to the clicked link
             e.target.classList.add('active');
 
             loadFile(filePath);
