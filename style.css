@@ -107,6 +107,12 @@ body {
     color: var(--sidebar-link-hover-text);
 }
 
+.loading-message {
+    padding: 1rem;
+    text-align: center;
+    opacity: 0.7;
+}
+
 /* --- Main Content Styles --- */
 #content {
     background-color: var(--content-bg);
