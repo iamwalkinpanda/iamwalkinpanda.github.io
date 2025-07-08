@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>walkinpanad</title>
+    <title>WalkinPanda's Learning Log</title>
     <!-- Website Icon (Favicon) -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐼</text></svg>">
     <!-- Google Font for Typewriter style -->
@@ -29,6 +29,10 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-moon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
                 </button>
             </div>
+            
+            <!-- Calendar will be inserted here by JavaScript -->
+            <div id="calendar-container"></div>
+
             <nav id="file-navigation">
                 <p class="loading-message">Loading logs...</p>
             </nav>
@@ -36,11 +40,11 @@
 
         <!-- Main Content Area -->
         <main id="content">
-            <!-- Content, including welcome screen and logs, is loaded here by script.js -->
+            <!-- Content is loaded here by JavaScript -->
         </main>
     </div>
 
-    <!-- Link to your JavaScript file -->
-    <script src="script.js"></script>
+    <!-- Load the main script as a module -->
+    <script type="module" src="js/main.js"></script>
 </body>
 </html>

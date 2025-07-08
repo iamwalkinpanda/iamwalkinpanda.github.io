@@ -1,5 +1,6 @@
+```css
 /* FILE: style.css */
-/* --- Modern Two-Column Theme --- */
+/* --- No changes needed in this file --- */
 :root { /* Light Mode Variables (default) */
     --bg-color: #f4f7f9;
     --sidebar-bg: #ffffff;
@@ -16,6 +17,9 @@
     --pre-bg: #f1f5f9;
     --pre-text: #334155;
     --cursor-color: #0f172a;
+    --calendar-day-hover: #e2e8f0;
+    --calendar-has-entry-bg: rgba(59, 130, 246, 0.2);
+    --calendar-has-entry-text: #1d4ed8;
 }
 
 body.dark-mode { /* Dark Mode Variables */
@@ -34,6 +38,9 @@ body.dark-mode { /* Dark Mode Variables */
     --pre-bg: #0f172a;
     --pre-text: #e2e8f0;
     --cursor-color: #f8fafc;
+    --calendar-day-hover: #334155;
+    --calendar-has-entry-bg: rgba(96, 165, 250, 0.2);
+    --calendar-has-entry-text: #93c5fd;
 }
 
 body {
@@ -77,6 +84,12 @@ body {
     opacity: 0.8;
 }
 
+#file-navigation {
+    margin-top: 1rem;
+    border-top: 1px solid var(--sidebar-border);
+    padding-top: 1rem;
+}
+
 #file-navigation h3, #file-navigation h4 {
     color: var(--heading-color);
     font-size: 1.1rem;
@@ -114,6 +127,62 @@ body {
     text-align: center;
     opacity: 0.7;
 }
+
+/* --- Calendar Styles --- */
+#calendar-container {
+    margin-bottom: 1rem;
+}
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+.calendar-header button {
+    background: none;
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    color: var(--sidebar-text);
+}
+.calendar-header button:hover {
+    background-color: var(--sidebar-link-hover-bg);
+}
+.calendar-month-year {
+    font-weight: bold;
+    color: var(--heading-color);
+}
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+    text-align: center;
+}
+.calendar-day-name {
+    font-size: 0.8em;
+    font-weight: bold;
+    opacity: 0.7;
+}
+.calendar-day {
+    padding: 0.3rem;
+    border-radius: 50%;
+    font-size: 0.9em;
+}
+.calendar-day.has-entry {
+    background-color: var(--calendar-has-entry-bg);
+    color: var(--calendar-has-entry-text);
+    font-weight: bold;
+    cursor: pointer;
+}
+.calendar-day.has-entry:hover {
+    text-decoration: underline;
+}
+.calendar-day:not(.has-entry):hover {
+    background-color: var(--calendar-day-hover);
+}
+
 
 /* --- Main Content Styles --- */
 #content {
