@@ -1,0 +1,131 @@
+/* FILE: style.css */
+/* --- Modern Two-Column Theme --- */
+:root {
+    --bg-color: #f4f7f9;
+    --sidebar-bg: #1e293b; /* Dark Slate */
+    --content-bg: #ffffff;
+    --text-color: #334155; /* Slate 700 */
+    --heading-color: #0f172a; /* Slate 900 */
+    --accent-color: #3b82f6; /* Blue 500 */
+    --border-color: #e2e8f0; /* Slate 200 */
+    --sidebar-text: #cbd5e1; /* Slate 300 */
+    --sidebar-hover-bg: #334155; /* Slate 700 */
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 280px 1fr; /* Sidebar width and main content */
+    min-height: 100vh;
+}
+
+/* --- Sidebar Styles --- */
+#sidebar {
+    background-color: var(--sidebar-bg);
+    color: var(--sidebar-text);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-header {
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #334155;
+    margin-bottom: 1rem;
+}
+.sidebar-header h2 {
+    color: #fff;
+    margin: 0;
+}
+.sidebar-header p {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+#file-navigation h3 {
+    color: #fff;
+    font-size: 1.2rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+#file-navigation ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#file-navigation li a {
+    display: block;
+    color: var(--sidebar-text);
+    text-decoration: none;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+    font-size: 0.95rem;
+}
+
+#file-navigation li a:hover, #file-navigation li a.active {
+    background-color: var(--sidebar-hover-bg);
+    color: #fff;
+}
+
+/* --- Main Content Styles --- */
+#content {
+    background-color: var(--content-bg);
+    padding: 2rem 3rem;
+    overflow-y: auto;
+}
+
+.log-entry h1, .log-entry h2, .log-entry h3 {
+    color: var(--heading-color);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
+}
+
+.log-entry p {
+    margin-bottom: 1rem;
+}
+
+.log-entry code {
+    background-color: var(--border-color);
+    padding: 0.2em 0.4em;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+
+.log-entry pre {
+    background-color: #0f172a; /* Dark code blocks */
+    color: #e2e8f0;
+    padding: 1rem;
+    border-radius: 8px;
+    overflow-x: auto;
+}
+
+.log-entry blockquote {
+    border-left: 4px solid var(--accent-color);
+    padding-left: 1rem;
+    margin-left: 0;
+    color: #64748b; /* Slate 500 */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .grid-container {
+        grid-template-columns: 1fr;
+    }
+    #sidebar {
+        height: auto;
+        border-bottom: 1px solid var(--border-color);
+    }
+    #content {
+        padding: 1.5rem;
+    }
+}
