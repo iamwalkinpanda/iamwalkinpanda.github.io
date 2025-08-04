@@ -35,7 +35,7 @@ export async function navigate(path) {
         renderContent(markdown);
         
         const { year, quarter, file } = entry;
-        // This creates the new URL format: /logs/2025/Quarterback-1/2025-07-08
+        // This creates the new URL format: /logs/2025/cycle-1/2025-07-08
         const cleanUrl = `/logs/${year}/${quarter}/${file.replace('.md', '')}`;
         history.pushState({ path }, '', cleanUrl);
         updateActiveLink(path);

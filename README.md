@@ -1,1 +1,1 @@
-Test File
+Logging my 12-week cycles of learning to keep a public accountability.
