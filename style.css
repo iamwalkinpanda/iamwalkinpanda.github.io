@@ -20,20 +20,20 @@
     --calendar-has-entry-text: #1d4ed8;
 }
 
-body.dark-mode { /* Dark Mode Variables */
-    --bg-color: #0f172a;
+body.dark-mode { /* Dark Mode Variables (more terminal-like) */
+    --bg-color: #1A1A1A;
     --sidebar-bg: #1e293b;
-    --content-bg: #1e293b;
-    --text-color: #cbd5e1;
+    --content-bg: #1A1A1A;
+    --text-color: #C0C0C0;
     --heading-color: #f8fafc;
-    --accent-color: #60a5fa;
+    --accent-color: #00FF00;
     --border-color: #334155;
-    --sidebar-text: #cbd5e1;
+    --sidebar-text: #C0C0C0;
     --sidebar-link-hover-bg: #334155;
     --sidebar-link-hover-text: #ffffff;
     --sidebar-border: #334155;
     --code-bg: #334155;
-    --pre-bg: #0f172a;
+    --pre-bg: #1e293b;
     --pre-text: #e2e8f0;
     --cursor-color: #f8fafc;
     --calendar-day-hover: #334155;
@@ -43,7 +43,7 @@ body.dark-mode { /* Dark Mode Variables */
 
 body {
     font-family: 'Roboto Mono', monospace; /* TYPEWRITER FONT */
-    line-height: 1.6;
+    line-height: 1.8;
     background-color: var(--bg-color);
     color: var(--text-color);
     margin: 0;
@@ -63,13 +63,13 @@ body {
     padding: 1.5rem;
     display: flex;
     flex-direction: column;
-    border-right: 1px solid var(--sidebar-border);
+    border-right: 1px dotted var(--sidebar-border);
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .sidebar-header {
     padding-bottom: 1rem;
-    border-bottom: 1px solid var(--sidebar-border);
+    border-bottom: 1px dotted var(--sidebar-border);
     margin-bottom: 1rem;
     position: relative;
 }
@@ -88,7 +88,7 @@ body {
 
 #file-navigation {
     margin-top: 1rem;
-    border-top: 1px solid var(--sidebar-border);
+    border-top: 1px dotted var(--sidebar-border);
     padding-top: 1rem;
 }
 
@@ -97,7 +97,20 @@ body {
     font-size: 1.1rem;
     margin-top: 1.5rem;
     margin-bottom: 0.5rem;
+    cursor: pointer;
+    position: relative;
+    padding-left: 1.2rem;
 }
+#file-navigation h3::before, #file-navigation h4::before {
+    content: '▶';
+    position: absolute;
+    left: 0;
+    transition: transform 0.2s ease;
+}
+#file-navigation h3.expanded::before, #file-navigation h4.expanded::before {
+    content: '▼';
+}
+
 #file-navigation h4 {
     font-size: 1rem;
     opacity: 0.8;
@@ -107,6 +120,12 @@ body {
     list-style: none;
     padding: 0;
     margin: 0;
+    max-height: 1000px; /* Arbitrarily large value for transition */
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+#file-navigation ul.collapsed {
+    max-height: 0;
 }
 
 #file-navigation li a {
@@ -114,7 +133,7 @@ body {
     color: var(--sidebar-text);
     text-decoration: none;
     padding: 0.5rem 0.75rem;
-    border-radius: 6px;
+    border-radius: 0;
     transition: background-color 0.2s ease, color 0.2s ease;
     font-size: 0.95rem;
 }
@@ -143,7 +162,7 @@ body {
 .calendar-header button {
     background: none;
     border: 1px solid var(--border-color);
-    border-radius: 50%;
+    border-radius: 0;
     width: 30px;
     height: 30px;
     cursor: pointer;
@@ -169,7 +188,7 @@ body {
 }
 .calendar-day {
     padding: 0.3rem;
-    border-radius: 50%;
+    border-radius: 0;
     font-size: 0.9em;
 }
 .calendar-day.has-entry {
@@ -192,28 +211,32 @@ body {
     padding: 2rem 3rem;
     overflow-y: auto;
     transition: background-color 0.3s ease;
+    /* CRT-like scanlines */
+    background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 100% 2px;
 }
 
 .log-entry h1, .log-entry h2, .log-entry h3 {
     color: var(--heading-color);
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px dotted var(--border-color);
     padding-bottom: 0.5rem;
+    text-shadow: 0 0 5px var(--heading-color);
 }
 .log-entry code {
     background-color: var(--code-bg);
     padding: 0.2em 0.4em;
-    border-radius: 4px;
+    border-radius: 0;
     font-size: 0.9em;
 }
 .log-entry pre {
     background-color: var(--pre-bg);
     color: var(--pre-text);
     padding: 1rem;
-    border-radius: 8px;
+    border-radius: 0;
     overflow-x: auto;
 }
 .log-entry blockquote {
-    border-left: 4px solid var(--accent-color);
+    border-left: 4px dotted var(--accent-color);
     padding-left: 1rem;
     margin-left: 0;
     color: #64748b;
@@ -226,7 +249,7 @@ body {
     right: 0;
     background: none;
     border: 1px solid var(--border-color);
-    border-radius: 50%;
+    border-radius: 0;
     cursor: pointer;
     width: 40px;
     height: 40px;
@@ -234,6 +257,9 @@ body {
     align-items: center;
     justify-content: center;
     color: var(--sidebar-text);
+    font-family: 'Roboto Mono', monospace;
+    font-weight: bold;
+    font-size: 1.2rem;
 }
 #theme-toggle:hover {
     background-color: var(--sidebar-link-hover-bg);
@@ -286,7 +312,7 @@ body.dark-mode .icon-sun { display: none; }
     }
     #sidebar {
         height: auto;
-        border-bottom: 1px solid var(--border-color);
+        border-bottom: 1px dotted var(--border-color);
         border-right: none;
     }
     #content {

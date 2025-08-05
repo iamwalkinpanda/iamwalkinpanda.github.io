@@ -19,7 +19,7 @@ export function buildNav(structure) {
     let navHTML = '';
     const sortedYears = Object.keys(structure).sort((a, b) => b - a);
     for (const year of sortedYears) {
-        navHTML += `<h3>${year}</h3>`;
+        navHTML += `<h3 class="collapsible-header">${year}</h3><ul class="collapsible-content">`;
         const sortedQuarters = Object.keys(structure[year]).sort();
         for (const quarter of sortedQuarters) {
             navHTML += `<h4>${quarter.replace(/-/g, ' ')}</h4><ul>`;
@@ -30,8 +30,22 @@ export function buildNav(structure) {
             });
             navHTML += `</ul>`;
         }
+        navHTML += `</ul>`;
     }
     navContainer.innerHTML = navHTML;
+
+    // Add event listeners for collapsing/expanding
+    document.querySelectorAll('.collapsible-header').forEach(header => {
+        header.addEventListener('click', () => {
+            header.classList.toggle('expanded');
+            const content = header.nextElementSibling;
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+            } else {
+                content.style.maxHeight = content.scrollHeight + 'px';
+            }
+        });
+    });
 }
 
 /**
