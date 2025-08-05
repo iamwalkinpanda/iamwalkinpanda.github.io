@@ -1,4 +1,6 @@
 // FILE: js/ui.js
+import { fetchFileContent } from './api.js';
+
 const navContainer = document.getElementById('file-navigation');
 const contentContainer = document.getElementById('content');
 const calendarContainer = document.getElementById('calendar-container');
@@ -19,26 +21,33 @@ export function buildNav(structure) {
     let navHTML = '';
     const sortedYears = Object.keys(structure).sort((a, b) => b - a);
     for (const year of sortedYears) {
-        navHTML += `<h3 class="collapsible-header">${year}</h3><ul class="collapsible-content">`;
+        // Year header and content container
+        navHTML += `<h3 class="collapsible-header">${year}</h3>`;
+        navHTML += `<div class="collapsible-content">`;
+
         const sortedQuarters = Object.keys(structure[year]).sort();
         for (const quarter of sortedQuarters) {
-            navHTML += `<h4>${quarter.replace(/-/g, ' ')}</h4><ul>`;
+            // Quarter header and content container
+            navHTML += `<h4 class="collapsible-header">${quarter.replace(/-/g, ' ')}</h4>`;
+            navHTML += `<ul class="collapsible-content">`;
+            
             const sortedFiles = structure[year][quarter].sort().reverse();
             sortedFiles.forEach(file => {
                 const filePath = `logs/${year}/${quarter}/${file}`;
                 navHTML += `<li><a href="#" data-path="${filePath}">${file.replace('.md', '')}</a></li>`;
             });
-            navHTML += `</ul>`;
+
+            navHTML += `</ul>`; // End of quarter ul
         }
-        navHTML += `</ul>`;
+        navHTML += `</div>`; // End of year div
     }
     navContainer.innerHTML = navHTML;
 
     // Add event listeners for collapsing/expanding
     document.querySelectorAll('.collapsible-header').forEach(header => {
         header.addEventListener('click', () => {
-            header.classList.toggle('expanded');
             const content = header.nextElementSibling;
+            header.classList.toggle('expanded');
             if (content.style.maxHeight) {
                 content.style.maxHeight = null;
             } else {

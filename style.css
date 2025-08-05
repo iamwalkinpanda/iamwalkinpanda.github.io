@@ -101,14 +101,15 @@ body {
     position: relative;
     padding-left: 1.2rem;
 }
-#file-navigation h3::before, #file-navigation h4::before {
+
+#file-navigation .collapsible-header::before {
     content: '▶';
     position: absolute;
     left: 0;
     transition: transform 0.2s ease;
 }
-#file-navigation h3.expanded::before, #file-navigation h4.expanded::before {
-    content: '▼';
+#file-navigation .collapsible-header.expanded::before {
+    transform: rotate(90deg);
 }
 
 #file-navigation h4 {
@@ -116,7 +117,7 @@ body {
     opacity: 0.8;
 }
 
-#file-navigation ul {
+#file-navigation .collapsible-content {
     list-style: none;
     padding: 0;
     margin: 0;
@@ -124,11 +125,12 @@ body {
     overflow: hidden;
     transition: max-height 0.3s ease;
 }
-#file-navigation ul.collapsed {
-    max-height: 0;
+#file-navigation .collapsible-content[style*="max-height: 0"] {
+    max-height: 0 !important;
 }
 
-#file-navigation li a {
+
+#file-navigation ul li a {
     display: block;
     color: var(--sidebar-text);
     text-decoration: none;
@@ -138,7 +140,7 @@ body {
     font-size: 0.95rem;
 }
 
-#file-navigation li a:hover, #file-navigation li a.active {
+#file-navigation ul li a:hover, #file-navigation ul li a.active {
     background-color: var(--sidebar-link-hover-bg);
     color: var(--sidebar-link-hover-text);
 }
@@ -264,10 +266,14 @@ body {
 #theme-toggle:hover {
     background-color: var(--sidebar-link-hover-bg);
 }
-.icon-moon { display: none; }
-.icon-sun { display: block; }
-body.dark-mode .icon-moon { display: block; }
-body.dark-mode .icon-sun { display: none; }
+#theme-toggle svg {
+    display: block;
+}
+body.dark-mode #theme-toggle .icon-sun { display: none; }
+body.dark-mode #theme-toggle .icon-moon { display: block; }
+#theme-toggle .icon-moon { display: none; }
+#theme-toggle .icon-sun { display: block; }
+
 
 /* --- Terminal Welcome Screen --- */
 .terminal-container {
